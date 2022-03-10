@@ -26,9 +26,18 @@ export const contactSlice = createSlice({
 		removeContact: (state, action: PayloadAction<number>) => {
 			state.value = state.value.filter((v) => v.id !== action.payload);
 		},
+		updateContact: (state, action: PayloadAction<any>) => {
+			state.value.map((contact) => {
+				if (contact.id === action.payload.id) {
+					contact.thenumber = action.payload.newcontact;
+					return;
+				}
+			});
+		},
 	},
 });
 
 export const { addContact } = contactSlice.actions;
 export const { removeContact } = contactSlice.actions;
+export const { updateContact } = contactSlice.actions;
 export default contactSlice.reducer;

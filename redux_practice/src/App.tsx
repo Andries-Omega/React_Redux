@@ -3,11 +3,12 @@ import logo from "./logo.svg";
 import "./App.css";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "./store";
-import { addContact, removeContact } from "./Contacts/Contacts";
+import { addContact, removeContact, updateContact } from "./Contacts/Contacts";
 
 export default function App() {
 	const contacts = useSelector((state: RootState) => state.contacts.value);
 	const [contactInput, setContactInput] = useState("");
+	const [contactUpdate, setContactUpdate] = useState("");
 	const dispatch = useDispatch();
 	return (
 		<div className="p-4">
@@ -17,12 +18,30 @@ export default function App() {
 						<p className=" text-black text-base">
 							PhoneNumber: {contact.thenumber}
 						</p>
-						<button
-							className=" bg-red-500 text-white ml-20 mb-6 W-32 h-10 rounded-md hover:bg-red-800"
-							onClick={() => dispatch(removeContact(contact.id))}
-						>
-							Delete
-						</button>
+						<div className="  ">
+							<input
+								type="text"
+								className=" h-9 focus:outline-none border-blue-500 border-2 rounded-md pl-3"
+								placeholder="Enter Contact"
+								onChange={(e) => setContactUpdate(e.target.value)}
+							/>
+							<button
+								className=" bg-slate-500 text-white ml-20 mb-6 W-40 h-10 rounded-md hover:bg-slate-700"
+								onClick={() =>
+									dispatch(
+										updateContact({ id: contact.id, newcontact: contactUpdate })
+									)
+								}
+							>
+								Update
+							</button>
+							<button
+								className=" bg-red-500 text-white ml-20 mb-6 W-32 h-10 rounded-md hover:bg-red-800"
+								onClick={() => dispatch(removeContact(contact.id))}
+							>
+								Delete
+							</button>
+						</div>
 					</div>
 				);
 			})}
